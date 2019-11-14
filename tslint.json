@@ -1,0 +1,16 @@
+{
+  "defaultSeverity": "error",
+  "extends": ["tslint:recommended"],
+  "plugins": "prettier",
+  "jsRules": {},
+  "rules": {
+    "ordered-imports": [false],
+    "object-literal-sort-keys": [false],
+    "no-console": false,
+    "prettier/prettier": ["error"],
+    "quotemark": [true, "single", "avoid-escape"],
+    "comma-dangle": ["error", "always"],
+    "arrow-parens": [true, "ban-single-arg-parens"]
+  },
+  "rulesDirectory": []
+}
