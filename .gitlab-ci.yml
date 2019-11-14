@@ -1,0 +1,29 @@
+image: node:12.12.0
+stages:
+  - build
+  - test
+
+cache:
+  paths:
+    - node_modules/
+
+lint:
+  stage: test
+  script:
+    - npm run lint
+  artifacts:
+    paths:
+      - node_modules/
+
+build:
+  stage: build
+  script:
+    - npm install
+    - npm run build
+test:
+  stage: test
+  script:
+    - npm run test
+  artifacts:
+    paths:
+      - node_modules/
