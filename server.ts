@@ -4,8 +4,6 @@ import * as inert from '@hapi/inert';
 import * as joi from '@hapi/joi';
 import * as vision from '@hapi/vision';
 
-const responses = require('./response/index.ts');
-
 const init = async () => {
   const server: Server = new Server({
     host: 'localhost',
