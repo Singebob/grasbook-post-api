@@ -20,10 +20,3 @@ build:
   script:
     - npm install
     - npm run build
-test:
-  stage: test
-  script:
-    - npm run test
-  artifacts:
-    paths:
-      - node_modules/
