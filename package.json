@@ -17,19 +17,19 @@
     "node-typescript-compiler": "^2.0.0",
     "nodemon": "^1.19.4",
     "pg": "^7.12.1",
-    "typeorm": "^0.2.20",
-    "typescript": "^3.6.4"
+    "typeorm": "^0.2.20"
   },
   "devDependencies": {
     "ts-node": "^8.4.1",
-    "tslint": "^5.20.1"
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.2"
   },
   "scripts": {
     "test": "jest",
     "dev": "nodemon -r ./node_modules/dotenv/config --exec ./node_modules/.bin/ts-node.cmd ./server.ts",
     "build": "tsc",
     "lint": "tslint -c tslint.json '**.ts'",
-    "start": "node .dist/server.js"
+    "start": "node ./dist/server.js"
   },
   "repository": {
     "type": "git",

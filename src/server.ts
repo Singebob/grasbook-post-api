@@ -28,7 +28,7 @@ const resp500 = responseJson500(json);
 
 const init = async () => {
   const server: Server = new Server({
-    host: 'localhost',
+    host: '0.0.0.0',
     port: 8888,
   });
 
