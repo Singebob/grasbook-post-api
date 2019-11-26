@@ -5,6 +5,9 @@ import * as joi from '@hapi/joi';
 import * as vision from '@hapi/vision';
 
 import * as json from './post.json';
+import { connection } from './connectDatabase/connectDatabase';
+
+import { CommentRoute } from './comments';
 
 import { responseJson200 } from './responses/200';
 import { responseJson201 } from './responses/201';
@@ -27,6 +30,7 @@ const resp416 = responseJson416(json);
 const resp500 = responseJson500(json);
 
 const init = async () => {
+  connection.then(resp => console.log('Connection Established !'));
   const server: Server = new Server({
     host: '0.0.0.0',
     port: 8888,
@@ -192,6 +196,7 @@ const init = async () => {
       },
     },
   });
+  server.route(CommentRoute);
 
   await server.register([
     inert,
