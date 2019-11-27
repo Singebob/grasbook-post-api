@@ -22,7 +22,8 @@ const resp403 = responseJson403(json);
 const resp416 = responseJson416(json);
 const resp500 = responseJson500(json);
 
-export const CommentRoute: ServerRoute[] | CommonRouteProperties[] = [ // CHEH GET FUCKED KIDDO
+export const CommentRoute: ServerRoute[] | CommonRouteProperties[] = [
+  // CHEH GET FUCKED KIDDO
   {
     // 200 206 400 403 416 500
     method: 'GET',
@@ -38,18 +39,17 @@ export const CommentRoute: ServerRoute[] | CommonRouteProperties[] = [ // CHEH G
       },
       plugins: {
         'hapi-swagger': {
-
-        responses: {
-          ...resp200,
-          ...resp206,
-          ...resp400,
-          ...resp416,
-          ...resp403,
-          ...resp500,
+          responses: {
+            ...resp200,
+            ...resp206,
+            ...resp400,
+            ...resp416,
+            ...resp403,
+            ...resp500,
+          },
         },
       },
     },
-  },
   },
   {
     // 200 206 400 403 416 500
@@ -67,17 +67,16 @@ export const CommentRoute: ServerRoute[] | CommonRouteProperties[] = [ // CHEH G
       },
       plugins: {
         'hapi-swagger': {
-
-      responses: {
-        ...resp200,
-        ...resp206,
-        ...resp400,
-        ...resp416,
-        ...resp403,
-        ...resp500,
+          responses: {
+            ...resp200,
+            ...resp206,
+            ...resp400,
+            ...resp416,
+            ...resp403,
+            ...resp500,
+          },
+        },
       },
-    },
-  },
     },
   },
   {
@@ -96,17 +95,17 @@ export const CommentRoute: ServerRoute[] | CommonRouteProperties[] = [ // CHEH G
       },
       plugins: {
         'hapi-swagger': {
-      responses: {
-        ...resp200,
-        ...resp206,
-        ...resp400,
-        ...resp416,
-        ...resp403,
-        ...resp500,
+          responses: {
+            ...resp200,
+            ...resp206,
+            ...resp400,
+            ...resp416,
+            ...resp403,
+            ...resp500,
+          },
+        },
       },
     },
-  },
-},
   },
   {
     // 200 401 403 500
@@ -119,23 +118,20 @@ export const CommentRoute: ServerRoute[] | CommonRouteProperties[] = [ // CHEH G
       notes: 'Get only one comment',
       tags: ['api'],
       validate: {
-        params: {
-          BasicUuidParamSchema,
-        },
+        params: BasicUuidParamSchema,
       },
       plugins: {
         'hapi-swagger': {
-
-      responses: {
-        ...resp200,
-        ...resp400,
-        ...resp401,
-        ...resp403,
-        ...resp500,
+          responses: {
+            ...resp200,
+            ...resp400,
+            ...resp401,
+            ...resp403,
+            ...resp500,
+          },
+        },
       },
     },
-  },
-},
   },
   {
     // 201 401 403 500
@@ -148,23 +144,21 @@ export const CommentRoute: ServerRoute[] | CommonRouteProperties[] = [ // CHEH G
       notes: 'Comment a post',
       tags: ['api'],
       validate: {
-        payload: {
-          CommentSchema,
-        },
+        payload: CommentSchema,
       },
       plugins: {
         'hapi-swagger': {
-
-      responses: {
-        ...resp201,
-        ...resp400,
-        ...resp401,
-        ...resp403,
-        ...resp500,
+          responses: {
+            ...resp201,
+            ...resp400,
+            ...resp401,
+            ...resp403,
+            ...resp500,
+          },
+          payloadType: 'form',
+        },
       },
     },
-  },
-},
   },
   {
     // 201 401 403 500
@@ -177,23 +171,19 @@ export const CommentRoute: ServerRoute[] | CommonRouteProperties[] = [ // CHEH G
       notes: 'Update a comment',
       tags: ['api'],
       validate: {
-        params: {
-          BasicUuidParamSchema,
-        },
-        payload: {
-          CommentSchema,
-        },
+        params: BasicUuidParamSchema,
+        payload: CommentSchema,
       },
       plugins: {
         'hapi-swagger': {
-
-            responses: {
-              ...resp204,
-              ...resp400,
-              ...resp401,
-              ...resp403,
-              ...resp500,
+          responses: {
+            ...resp204,
+            ...resp400,
+            ...resp401,
+            ...resp403,
+            ...resp500,
           },
+          payloadType: 'form',
         },
       },
     },
@@ -208,22 +198,19 @@ export const CommentRoute: ServerRoute[] | CommonRouteProperties[] = [ // CHEH G
       notes: 'Delete a comment',
       tags: ['api'],
       validate: {
-        params: {
-          BasicUuidParamSchema,
-        },
+        params: BasicUuidParamSchema,
       },
       plugins: {
         'hapi-swagger': {
-
-        responses: {
-          ...resp204,
-          ...resp400,
-          ...resp401,
-          ...resp403,
-          ...resp500,
+          responses: {
+            ...resp204,
+            ...resp400,
+            ...resp401,
+            ...resp403,
+            ...resp500,
+          },
         },
       },
     },
-  },
   },
 ];

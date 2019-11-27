@@ -14,7 +14,7 @@ import {
 @Entity()
 export class Comment extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  public id: string;
+  public uuid: string;
 
   @Column('character varying')
   public content: string;
@@ -31,10 +31,22 @@ export class Comment extends BaseEntity {
   @UpdateDateColumn()
   public updatedAt: Date;
 
-  @ManyToOne(type => Comment, comment => comment.comments)
+  @ManyToOne(
+    type => Comment,
+    comment => comment.comments,
+    {
+      cascade: false,
+    }
+  )
   public comment: Comment;
 
-  @OneToMany(type => Comment, comment => comment.comment)
+  @OneToMany(
+    type => Comment,
+    comment => comment.comment,
+    {
+      cascade: true,
+    }
+  )
   public comments: Comment[];
 
   @RelationCount((comment: Comment) => comment.comments)

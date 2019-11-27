@@ -16,18 +16,31 @@ export class CommentRepository {
     const args = { ...options };
     args.offset = args.limit * args.page;
     args.relations = ['comments'];
-    return await Comment.findOne(id, args).then(result => {
-      const comments = {...result.comments};
-      return comments;
-    })
-    .catch(err => console.log(err));
+    return await Comment.findOne(id, args)
+      .then(result => {
+        const comments = { ...result.comments };
+        return comments;
+      })
+      .catch(err => console.log(err));
   }
   public static async create(values) {
-    return await Comment.create(values);
+    const comment: Comment = await Comment.create(values);
+    return await Comment.insert(comment).then(commentInserted => {
+      console.log(commentInserted.identifiers);
+      return {
+        location: `/comments/${commentInserted.identifiers[0].uuid}`,
+      };
+    });
   }
-  public static async update(id, values) {
-    return await Comment.update(id, values).catch(err => console.log(err)); // Error404 à gérer
+  public static async update(uuid, values) {
+    const comment: Comment = new Comment();
+    comment.content = values.content;
+    comment.mediaUrl = values.mediaUrl;
+    comment.userUuid = values.userUuid;
+    return await Comment.update(uuid, comment).catch(err => console.log(err)); // Error404 à gérer
   }
+
+  // MUST ADD ROUTE TO ADD RELATION
 
   public static async delete(id) {
     return await Comment.delete(id).catch(err => console.log(err)); // Error404 à gérer
