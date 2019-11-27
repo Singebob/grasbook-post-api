@@ -5,9 +5,9 @@ const CommentSchema = {
     .string()
     .required()
     .description('Content of the comment'),
-  mediaUrl: joi
-    .string()
-    .required()
+  mediaBlob: joi
+    .binary()
+    .encoding('base64')
     .description('Url of the image/video provided'),
   userUuid: joi
     .string()

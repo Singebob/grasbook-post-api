@@ -2,15 +2,25 @@ import * as TypeORM from 'typeorm';
 import { Comment } from './comments.model';
 
 export class CommentRepository {
-  public static async findAll(options, param = null) {
+  public static async findAll(options, param: string = null) {
     const args = { ...options };
     args.offset = args.limit * args.page;
     if (param !== null) {
       args.where = {
-        uuid: param,
+        postUuid: param,
       };
     }
     return await Comment.find(args).catch(err => console.log(err));
+  }
+  public static async findAllRelatedComment(id, options) {
+    const args = { ...options };
+    args.offset = args.limit * args.page;
+    args.relations = ['comments'];
+    return await Comment.findOne(id, args).then(result => {
+      const comments = {...result.comments};
+      return comments;
+    })
+    .catch(err => console.log(err));
   }
   public static async create(values) {
     return await Comment.create(values);

@@ -1,4 +1,4 @@
-import { Server } from '@hapi/hapi';
+import { Server, RouteOptions, ServerRoute } from '@hapi/hapi';
 import * as hapiSwagger from 'hapi-swagger';
 import * as inert from '@hapi/inert';
 import * as joi from '@hapi/joi';
@@ -196,7 +196,7 @@ const init = async () => {
       },
     },
   });
-  server.route(CommentRoute);
+  server.route(CommentRoute as ServerRoute[]); // Get BRAINED
 
   await server.register([
     inert,
