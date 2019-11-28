@@ -11,6 +11,7 @@ import { responseJson416 } from '../responses/416';
 import { responseJson500 } from '../responses/500';
 import * as json from './comment.json';
 import { ServerRoute, CommonRouteProperties } from '@hapi/hapi';
+import { ErrorFunctions, SuccessFunctions } from '../functions';
 
 const resp200 = responseJson200(json);
 const resp201 = responseJson201(json);
@@ -30,7 +31,9 @@ export const CommentRoute: ServerRoute[] | CommonRouteProperties[] = [
     path: '/comments',
     options: {
       handler: (request, h) => {
-        return CommentRepository.findAll(request.query).catch(err => console.log(err));
+        return CommentRepository.findAll(request.query)
+          .then(result => SuccessFunctions.successCodeChange(h, result))
+          .catch(err => ErrorFunctions.errorCodeChange(h, err));
       },
       notes: 'List of comments',
       tags: ['api'],
@@ -57,7 +60,9 @@ export const CommentRoute: ServerRoute[] | CommonRouteProperties[] = [
     path: '/posts/{uuid}/comments',
     options: {
       handler: (request, h) => {
-        return CommentRepository.findAll(request.query, request.params.uuid);
+        return CommentRepository.findAll(request.query, request.params.uuid)
+          .then(result => SuccessFunctions.successCodeChange(h, result))
+          .catch(err => ErrorFunctions.errorCodeChange(h, err));
       },
       notes: 'List of comments',
       tags: ['api'],
@@ -85,7 +90,9 @@ export const CommentRoute: ServerRoute[] | CommonRouteProperties[] = [
     path: '/comments/{uuid}/comments',
     options: {
       handler: (request, h) => {
-        return CommentRepository.findAllRelatedComment(request.query, request.params.uuid);
+        return CommentRepository.findAllRelatedComment(request.params.uuid, request.query)
+          .then(result => SuccessFunctions.successCodeChange(h, result))
+          .catch(err => ErrorFunctions.errorCodeChange(h, err));
       },
       notes: 'List of comments',
       tags: ['api'],
@@ -113,7 +120,9 @@ export const CommentRoute: ServerRoute[] | CommonRouteProperties[] = [
     path: '/comments/{uuid}',
     options: {
       handler: (request, h) => {
-        return CommentRepository.findById(request.params.uuid);
+        return CommentRepository.findById(request.params.uuid)
+          .then(result => SuccessFunctions.successCodeChange(h, result))
+          .catch(err => ErrorFunctions.errorCodeChange(h, err));
       },
       notes: 'Get only one comment',
       tags: ['api'],
@@ -139,7 +148,9 @@ export const CommentRoute: ServerRoute[] | CommonRouteProperties[] = [
     path: '/comments',
     options: {
       handler: (request, h) => {
-        return CommentRepository.create(request.payload);
+        return CommentRepository.create(request.payload)
+          .then(result => SuccessFunctions.successCodeChange(h, result))
+          .catch(err => ErrorFunctions.errorCodeChange(h, err));
       },
       notes: 'Comment a post',
       tags: ['api'],
@@ -162,11 +173,43 @@ export const CommentRoute: ServerRoute[] | CommonRouteProperties[] = [
   },
   {
     // 201 401 403 500
+    method: 'POST',
+    path: '/comments/{uuid}/comment',
+    options: {
+      handler: (request, h) => {
+        return CommentRepository.createWithRelation(request.params.uuid, request.payload)
+          .then(result => SuccessFunctions.successCodeChange(h, result))
+          .catch(err => ErrorFunctions.errorCodeChange(h, err));
+      },
+      notes: 'Comment a post',
+      tags: ['api'],
+      validate: {
+        params: BasicUuidParamSchema,
+        payload: CommentSchema,
+      },
+      plugins: {
+        'hapi-swagger': {
+          responses: {
+            ...resp201,
+            ...resp400,
+            ...resp401,
+            ...resp403,
+            ...resp500,
+          },
+          payloadType: 'form',
+        },
+      },
+    },
+  },
+  {
+    // 201 401 403 500
     method: 'PUT',
     path: '/comments/{uuid}',
     options: {
       handler: (request, h) => {
-        return CommentRepository.update(request.params.uuid, request.payload);
+        return CommentRepository.update(request.params.uuid, request.payload)
+          .then(result => SuccessFunctions.successCodeChange(h, result))
+          .catch(err => ErrorFunctions.errorCodeChange(h, err));
       },
       notes: 'Update a comment',
       tags: ['api'],
@@ -193,7 +236,9 @@ export const CommentRoute: ServerRoute[] | CommonRouteProperties[] = [
     path: '/comments/{uuid}',
     options: {
       handler: (request, h) => {
-        return CommentRepository.delete(request.params.uuid);
+        return CommentRepository.delete(request.params.uuid)
+          .then(result => SuccessFunctions.successCodeChange(h, result))
+          .catch(err => ErrorFunctions.errorCodeChange(h, err));
       },
       notes: 'Delete a comment',
       tags: ['api'],

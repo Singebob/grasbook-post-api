@@ -1,5 +1,7 @@
 import * as TypeORM from 'typeorm';
 import { Comment } from './comments.model';
+import * as lodash from 'lodash';
+import { ErrorFunctions } from '../functions';
 
 export class CommentRepository {
   public static async findAll(options, param: string = null) {
@@ -10,7 +12,20 @@ export class CommentRepository {
         postUuid: param,
       };
     }
-    return await Comment.find(args).catch(err => console.log(err));
+    return await Comment.find(args)
+      .then(result => {
+        ErrorFunctions.error416(result, args.query);
+        const orderTab = lodash.orderBy(result, ['updatedAt', 'createdAt'], ['desc', 'desc']);
+        const slicedTab = orderTab.slice(args.offset, args.offset + args.limit);
+        ErrorFunctions.error416(slicedTab, args);
+        return {
+          code: 206,
+          result: slicedTab,
+        };
+      })
+      .catch(err => {
+        throw ErrorFunctions.error400(err);
+      });
   }
   public static async findAllRelatedComment(id, options) {
     const args = { ...options };
@@ -18,15 +33,23 @@ export class CommentRepository {
     args.relations = ['comments'];
     return await Comment.findOne(id, args)
       .then(result => {
-        const comments = { ...result.comments };
-        return comments;
+        ErrorFunctions.error404(result);
+        const orderTab = lodash.orderBy(
+          result.comments,
+          ['updatedAt', 'createdAt'],
+          ['desc', 'desc']
+        );
+        const slicedTab = orderTab.slice(args.offset, args.offset + args.limit);
+        ErrorFunctions.error416(slicedTab, args);
+        return { code: 206, result: slicedTab };
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        throw ErrorFunctions.error400(err);
+      });
   }
   public static async create(values) {
     const comment: Comment = await Comment.create(values);
     return await Comment.insert(comment).then(commentInserted => {
-      console.log(commentInserted.identifiers);
       return {
         location: `/comments/${commentInserted.identifiers[0].uuid}`,
       };
@@ -37,15 +60,42 @@ export class CommentRepository {
     comment.content = values.content;
     comment.mediaUrl = values.mediaUrl;
     comment.userUuid = values.userUuid;
-    return await Comment.update(uuid, comment).catch(err => console.log(err)); // Error404 à gérer
+    return await Comment.update(uuid, comment)
+      .then(result => {
+        ErrorFunctions.error404(result);
+        return result;
+      })
+      .catch(err => {
+        throw ErrorFunctions.error400(err);
+      });
   }
 
-  // MUST ADD ROUTE TO ADD RELATION
+  public static async createWithRelation(uuid, values) {
+    const args = { ...values };
+    args.comment = { uuid };
+    return await this.create(args).catch(err => {
+      throw ErrorFunctions.error400(err);
+    });
+  }
 
   public static async delete(id) {
-    return await Comment.delete(id).catch(err => console.log(err)); // Error404 à gérer
+    return await Comment.delete(id)
+      .then(result => {
+        ErrorFunctions.error404(result);
+        return result;
+      })
+      .catch(err => {
+        throw ErrorFunctions.error400(err);
+      });
   }
   public static async findById(id) {
-    return await Comment.findOne(id).catch(err => console.log(err)); // Error404 à gérer (possible)
+    return await Comment.findOne(id)
+      .then(result => {
+        ErrorFunctions.error404(result);
+        return result;
+      })
+      .catch(err => {
+        throw ErrorFunctions.error400(err);
+      });
   }
 }

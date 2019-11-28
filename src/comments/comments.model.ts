@@ -13,7 +13,7 @@ import {
 
 @Entity()
 export class Comment extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('uuid') // need DEFAUT uuid_generate_v4() in database
   public uuid: string;
 
   @Column('character varying')
@@ -25,10 +25,10 @@ export class Comment extends BaseEntity {
   @Column('uuid')
   public userUuid: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn() // need DEFAUT DATE.now() in database
   public createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn() // need DEFAUT DATE.now() in database
   public updatedAt: Date;
 
   @ManyToOne(

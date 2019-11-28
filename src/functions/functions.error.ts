@@ -1,21 +1,20 @@
-import * as _ from 'lodash';
+import * as lodash from 'lodash';
 
 class CustomError extends Error {
-
-    public code: number;
-    public statusCode: string;
-    public error: string;
-    constructor(message?: string, code?: number, error?: string, statusCode?: string) {
-        super(message);
-        this.code = code;
-        this.error = error;
-        this.statusCode = statusCode;
-        Object.setPrototypeOf(this, new.target.prototype);
-    }
+  public code: number;
+  public statusCode: string;
+  public error: string;
+  constructor(message?: string, code?: number, error?: string, statusCode?: string) {
+    super(message);
+    this.code = code;
+    this.error = error;
+    this.statusCode = statusCode;
+    Object.setPrototypeOf(this, new.target.prototype);
+  }
 }
 
 const error404 = result => {
-  if (!result || (_.isArray(result) && result[0] === 0) || result === 0) {
+  if (!result || result.affected === 0) {
     const error = new CustomError('No match found');
     error.code = 404;
     error.error = 'No Match Found';
@@ -34,29 +33,36 @@ const error416 = (result, query) => {
   }
 };
 
-const error400 = err => {
-  const errorContent = { ...err.parent };
-  // PG MISSING Column && Default Sequilize name (other DB compatibility)
-  if (errorContent.code === 42703 || errorContent.routine === 'errorMissingColumn') {
+const error400 = errorContent => {
+  // PG MISSING Column
+  if (errorContent.code === '42703') {
     const error = new CustomError('Invalid column name');
     error.code = 400;
     error.error = 'Bad Request';
     error.statusCode = 'column.not.found';
     return error;
   }
-  // PG unique_violation && Default Sequilize name (other DB compatibility)
-  if (errorContent.code === 23505 || errorContent.routine === '_bt_check_unique') {
+  // PG unique_violation
+  if (errorContent.code === '23505') {
     const error = new CustomError('Unique key violation');
     error.code = 400;
     error.error = 'Bad Request';
     error.statusCode = 'unique.constraint.violation';
     return error;
   }
-  return err;
+  // PG FK RepoertViolation
+  if (errorContent.code === '23503') {
+    const error = new CustomError('No match found');
+    error.code = 404;
+    error.error = 'No Match Found';
+    error.statusCode = 'id.not.found';
+    return error;
+  }
+  return errorContent;
 };
 
 const errorCodeChange = (h, err) => {
-  if (!_.isUndefined(err.code)) {
+  if (!lodash.isUndefined(err.code)) {
     const errorContent = {
       statusCode: err.statusCode,
       error: err.error,
@@ -72,4 +78,4 @@ const errorCodeChange = (h, err) => {
   return h.response(error).code(500);
 };
 
-module.exports = { error404, errorCodeChange, error400, error416 };
+export { error404, errorCodeChange, error400, error416 };

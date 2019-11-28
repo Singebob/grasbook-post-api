@@ -1,20 +1,25 @@
 // import AWS from 'aws-sdk';
-import _ from 'lodash';
+import lodash from 'lodash';
 
 // Je baise AWS et AmaZON
 const indexOfEnd = (fullstring, stringURL) => {
-    const io = fullstring.indexOf(stringURL);
-    return io === -1 ? -1 : io + stringURL.length;
-  };
+  const io = fullstring.indexOf(stringURL);
+  return io === -1 ? -1 : io + stringURL.length;
+};
 
-const UploadBinaryToUri = async (values: { firstName: any; lastName: any; pictureBlob: any; pictureUrl: any; }) => {
-    const endpoint = process.env.SCALEWAY_ENDPOINT;
-    const region = process.env.SCALEWAY_REGION;
-    const accessKey = process.env.SCALEWAY_ACESS_KEY;
-    const secretKey = process.env.SCALEWAY_SECRET_KEY;
-    const bucketName = process.env.SCALEWAY_BUCKET_NAME;
+const UploadBinaryToUri = async (values: {
+  firstName: any;
+  lastName: any;
+  pictureBlob: any;
+  pictureUrl: any;
+}) => {
+  const endpoint = process.env.SCALEWAY_ENDPOINT;
+  const region = process.env.SCALEWAY_REGION;
+  const accessKey = process.env.SCALEWAY_ACESS_KEY;
+  const secretKey = process.env.SCALEWAY_SECRET_KEY;
+  const bucketName = process.env.SCALEWAY_BUCKET_NAME;
 
-    /*const client = new AWS.S3({
+  /*const client = new AWS.S3({
       accessKeyId: accessKey,
       secretAccessKey: secretKey,
       region,
@@ -25,7 +30,7 @@ const UploadBinaryToUri = async (values: { firstName: any; lastName: any; pictur
       Key: `userApi/${values.firstName}.${values.lastName}.${Date.now()}.jpeg`,
       Body: values.pictureBlob,
     };
-    if (!_.isNull(values.pictureBlob) && !_.isUndefined(values.pictureBlob)) {
+    if (!lodash.isNull(values.pictureBlob) && !lodash.isUndefined(values.pictureBlob)) {
       const stringLocation = endpoint.substring(indexOfEnd(endpoint, 'https://'));
       client.upload(params, (err: any) => {
         if (err) {
@@ -34,7 +39,7 @@ const UploadBinaryToUri = async (values: { firstName: any; lastName: any; pictur
       });
       return `https://${bucketName}.${stringLocation}${params.Key}`;
     }*/
-    return values.pictureUrl;
-  };
+  return values.pictureUrl;
+};
 
 export { UploadBinaryToUri };
