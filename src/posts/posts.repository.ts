@@ -14,7 +14,7 @@ export class PostRepository {
     }
     return await Post.find(args)
       .then(result => {
-        ErrorFunctions.error416(result, args.query);
+        ErrorFunctions.error416(result, args);
         const orderTab = lodash.orderBy(result, ['updatedAt', 'createdAt'], ['desc', 'desc']);
         const slicedTab = orderTab.slice(args.offset, args.offset + args.limit);
         ErrorFunctions.error416(slicedTab, args);
