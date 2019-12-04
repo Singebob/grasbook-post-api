@@ -1,8 +1,5 @@
-export const responseJson204 = json => ({
-  '204': {
+export const responseJson204 = {
+  204: {
     description: 'No Content',
-    examples: {
-      'application/json': json,
-    },
   },
-});
+};

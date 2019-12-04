@@ -1,7 +1,7 @@
 import * as TypeORM from 'typeorm';
 import { Comment } from './comments.model';
 import * as lodash from 'lodash';
-import { ErrorFunctions } from '../functions';
+import { ErrorFunctions, OperatorFunctions } from '../functions';
 
 export class CommentRepository {
   public static async findAll(options, param: string = null) {
@@ -49,6 +49,7 @@ export class CommentRepository {
   }
   public static async create(values) {
     const comment: Comment = await Comment.create(values);
+    comment.mediaUrl = await OperatorFunctions.UploadBinaryToUri(values);
     return await Comment.insert(comment).then(commentInserted => {
       return {
         location: `/comments/${commentInserted.identifiers[0].uuid}`,
@@ -58,7 +59,7 @@ export class CommentRepository {
   public static async update(uuid, values) {
     const comment: Comment = new Comment();
     comment.content = values.content;
-    comment.mediaUrl = values.mediaUrl;
+    comment.mediaUrl = await OperatorFunctions.UploadBinaryToUri(values);
     comment.userUuid = values.userUuid;
     return await Comment.update(uuid, comment)
       .then(result => {
@@ -70,9 +71,17 @@ export class CommentRepository {
       });
   }
 
-  public static async createWithRelation(uuid, values) {
+  public static async createWithRelationComment(uuid, values) {
     const args = { ...values };
     args.comment = { uuid };
+    return await this.create(args).catch(err => {
+      throw ErrorFunctions.error400(err);
+    });
+  }
+
+  public static async createWithRelationPost(uuid, values) {
+    const args = { ...values };
+    args.post = { uuid };
     return await this.create(args).catch(err => {
       throw ErrorFunctions.error400(err);
     });

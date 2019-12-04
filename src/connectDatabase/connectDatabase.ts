@@ -1,6 +1,7 @@
 import { createConnection, Connection } from 'typeorm';
 import * as dotenv from 'dotenv';
-import { Comment } from '../comments/comments.model';
+import { Comment } from '../comments';
+import { Post } from '../posts';
 
 dotenv.config();
 
@@ -12,7 +13,7 @@ const connection = createConnection({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   logging: true,
-  entities: [Comment],
+  entities: [Comment, Post],
 });
 
 export { connection };

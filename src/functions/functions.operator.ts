@@ -1,44 +1,38 @@
-// import AWS from 'aws-sdk';
-import lodash from 'lodash';
+import * as AWS from 'aws-sdk';
+import * as lodash from 'lodash';
 
-// Je baise AWS et AmaZON
 const indexOfEnd = (fullstring, stringURL) => {
   const io = fullstring.indexOf(stringURL);
   return io === -1 ? -1 : io + stringURL.length;
 };
 
-const UploadBinaryToUri = async (values: {
-  firstName: any;
-  lastName: any;
-  pictureBlob: any;
-  pictureUrl: any;
-}) => {
+const UploadBinaryToUri = async values => {
   const endpoint = process.env.SCALEWAY_ENDPOINT;
   const region = process.env.SCALEWAY_REGION;
   const accessKey = process.env.SCALEWAY_ACESS_KEY;
   const secretKey = process.env.SCALEWAY_SECRET_KEY;
   const bucketName = process.env.SCALEWAY_BUCKET_NAME;
 
-  /*const client = new AWS.S3({
-      accessKeyId: accessKey,
-      secretAccessKey: secretKey,
-      region,
-      endpoint,
+  const client = new AWS.S3({
+    accessKeyId: accessKey,
+    secretAccessKey: secretKey,
+    region,
+    endpoint,
+  });
+  const params = {
+    Bucket: `${bucketName}`,
+    Key: `postApi/${values.userUuid}.${Date.now()}.jpeg`,
+    Body: values.mediaBlob,
+  };
+  if (!lodash.isNull(values.mediaBlob) && !lodash.isUndefined(values.mediaBlob)) {
+    const stringLocation = endpoint.substring(indexOfEnd(endpoint, 'https://'));
+    client.upload(params, (err: any) => {
+      if (err) {
+        throw err;
+      }
     });
-    const params = {
-      Bucket: `${bucketName}`,
-      Key: `userApi/${values.firstName}.${values.lastName}.${Date.now()}.jpeg`,
-      Body: values.pictureBlob,
-    };
-    if (!lodash.isNull(values.pictureBlob) && !lodash.isUndefined(values.pictureBlob)) {
-      const stringLocation = endpoint.substring(indexOfEnd(endpoint, 'https://'));
-      client.upload(params, (err: any) => {
-        if (err) {
-          throw err;
-        }
-      });
-      return `https://${bucketName}.${stringLocation}${params.Key}`;
-    }*/
+    return `https://${bucketName}.${stringLocation}${params.Key}`;
+  }
   return values.pictureUrl;
 };
 

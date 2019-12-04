@@ -1,8 +1,19 @@
-export const responseJson400 = json => ({
-  '400': {
+export const responseJson400 = {
+  400: {
     description: 'Bad Request',
     examples: {
-      'application/json': json,
+      'application/json': [
+        {
+          statusCode: 'column.not.found',
+          error: 'Bad Request',
+          message: 'Invalid column name',
+        },
+        {
+          statusCode: 'unique.constraint.violation',
+          error: 'Bad Request',
+          message: 'Unique key violation',
+        },
+      ],
     },
   },
-});
+};

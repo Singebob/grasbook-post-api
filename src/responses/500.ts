@@ -1,8 +1,12 @@
-export const responseJson500 = json => ({
-  '500': {
+export const responseJson500 = {
+  500: {
     description: 'Internal Server Error',
     examples: {
-      'application/json': json,
+      'application/json': {
+        statusCode: 'internal.server.error',
+        error: 'Internal Server Error',
+        message: 'Something went wrong',
+      },
     },
   },
-});
+};
