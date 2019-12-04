@@ -14,6 +14,7 @@ const connection = createConnection({
   database: process.env.DB_NAME,
   logging: true,
   entities: [Comment, Post],
+  synchronize: true,
 });
 
 export { connection };

@@ -13,6 +13,7 @@
     "aws-sdk": "^2.580.0",
     "dotenv": "^8.2.0",
     "eslint": "^6.5.1",
+    "hapi-auth-keycloak": "^4.3.3",
     "hapi-swagger": "^10.2.0",
     "jest": "^24.9.0",
     "lodash": "^4.17.15",
@@ -30,7 +31,7 @@
   },
   "scripts": {
     "test": "jest",
-    "dev": "nodemon -r ./node_modules/dotenv/config --exec ./node_modules/.bin/ts-node.cmd ./server.ts",
+    "dev": "nodemon -r ./node_modules/dotenv/config --exec ./node_modules/.bin/ts-node ./src/server.ts",
     "build": "tsc",
     "lint": "tslint -c tslint.json '**.ts'",
     "start": "node ./dist/server.js"
