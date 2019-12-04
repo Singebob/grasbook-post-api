@@ -70,6 +70,7 @@ const errorCodeChange = (h, err) => {
     };
     return h.response(errorContent).code(err.code);
   }
+  console.log(err);
   const error = {
     statusCode: 'internal.server.error',
     error: 'Internal Server Error',

@@ -1,8 +1,10 @@
-export const responseJson201 = json => ({
-  '201': {
+export const responseJson201 = {
+  201: {
     description: 'Created',
     examples: {
-      'application/json': json,
+      'application/json': {
+        location: '/{entities}/{uuid}',
+      },
     },
   },
-});
+};

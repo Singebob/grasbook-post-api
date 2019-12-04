@@ -1,8 +1,10 @@
-export const responseJson401 = json => ({
-  '401': {
+export const responseJson401 = {
+  401: {
     description: 'Unauthorized',
     examples: {
-      'application/json': json,
+      'application/json': {
+        message: 'Unauthorized',
+      },
     },
   },
-});
+};

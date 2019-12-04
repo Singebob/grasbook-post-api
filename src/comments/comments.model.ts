@@ -9,7 +9,7 @@ import {
   OneToMany,
   RelationCount,
 } from 'typeorm';
-// import {Post} from "../posts/Post";
+import { Post } from '../posts';
 
 @Entity()
 export class Comment extends BaseEntity {
@@ -52,6 +52,9 @@ export class Comment extends BaseEntity {
   @RelationCount((comment: Comment) => comment.comments)
   public commentsCount: number;
 
-  // @ManyToOne(type => Post, post => Post.comments)
-  // post: Post;
+  @ManyToOne(
+    type => Post,
+    post => post.comments
+  )
+  public post: Post;
 }
