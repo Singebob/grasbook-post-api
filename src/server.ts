@@ -16,6 +16,11 @@ const init = async () => {
   const server: Server = new Server({
     host: '0.0.0.0',
     port: process.env.PORT,
+    routes: {
+      cors: {
+        origin: ['*']
+      }
+    }
   });
 
   const swaggerOptions = {
@@ -51,7 +56,6 @@ const init = async () => {
   ]);
   server.auth.strategy('keycloak-jwt', 'keycloak-jwt', authStrategyOptions);
   server.auth.default('keycloak-jwt');
-  
   await server.start(), console.log('Server running at:', server.info.uri);
 };
 
