@@ -18,7 +18,7 @@ export class Post extends BaseEntity {
   @Column('character varying')
   public content: string;
 
-  @Column('character varying')
+  @Column('character varying', { nullable: true })
   public mediaUrl: URL;
 
   @Column('uuid')
