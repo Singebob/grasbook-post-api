@@ -21,8 +21,9 @@ const UploadBinaryToUri = async values => {
   });
   const params = {
     Bucket: `${bucketName}`,
-    Key: `postApi/${values.userUuid}.${Date.now()}.jpeg`,
+    Key: `postApi/${values.userUuid}.${Date.now()}.${values.pictureType}`,
     Body: values.mediaBlob,
+    ACL: 'read-public',
   };
   if (!lodash.isNull(values.mediaBlob) && !lodash.isUndefined(values.mediaBlob)) {
     const stringLocation = endpoint.substring(indexOfEnd(endpoint, 'https://'));
