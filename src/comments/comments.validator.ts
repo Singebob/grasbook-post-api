@@ -8,9 +8,10 @@ const CommentSchema = joi.object({
     .required()
     .description('Content of the comment'),
   mediaBlob: joi
-    .binary()
-    .encoding('base64')
+    .string()
     .description('Url of the image/video provided'),
+  mediaType: joi.valid('jpeg', 'jpg', 'png')
+    .description("Picture's type"),
   userUuid: joi
     .string()
     .guid({ version: ['uuidv4'] })
