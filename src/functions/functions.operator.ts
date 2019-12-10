@@ -19,10 +19,17 @@ const UploadBinaryToUri = async values => {
     region,
     endpoint,
   });
+
+  // eslint-disable-next-line new-cap
+  const mediaBlob: Buffer = Buffer.from(
+    values.mediaBlob.replace(/^data:image\/\w+;base64,/, ''),
+    'base64'
+  );
+
   const params = {
     Bucket: `${bucketName}`,
-    Key: `postApi/${values.userUuid}.${Date.now()}.${values.pictureType}`,
-    Body: values.mediaBlob,
+    Key: `postApi/${values.userUuid}.${Date.now()}.${values.mediaType}`,
+    Body: mediaBlob,
     ACL: 'read-public',
   };
   if (!lodash.isNull(values.mediaBlob) && !lodash.isUndefined(values.mediaBlob)) {
