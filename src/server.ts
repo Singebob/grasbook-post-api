@@ -14,7 +14,7 @@ const KEYCLOAK_URL = `${process.env.KEYCLOAK_PROTOCOL}://${process.env.KEYCLOAK_
 const init = async () => {
   connection.then(resp => console.log('Connection Established !'));
   const server: Server = new Server({
-    host: '0.0.0.0',
+    host: 'localhost',
     port: process.env.PORT,
     routes: {
       cors: {

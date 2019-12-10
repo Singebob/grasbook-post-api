@@ -158,7 +158,7 @@ export const CommentRoute: ServerRoute[] | CommonRouteProperties[] = [
   {
     // 201 401 403 500
     method: 'POST',
-    path: '/comments/{uuid}/comment',
+    path: '/comments/{uuid}/comments',
     options: {
       handler: (request, h) => {
         return CommentRepository.createWithRelationComment(request.params.uuid, request.payload)
@@ -188,7 +188,7 @@ export const CommentRoute: ServerRoute[] | CommonRouteProperties[] = [
   {
     // 201 401 403 500
     method: 'POST',
-    path: '/posts/{uuid}/comment',
+    path: '/posts/{uuid}/comments',
     options: {
       handler: (request, h) => {
         return CommentRepository.createWithRelationPost(request.params.uuid, request.payload)
