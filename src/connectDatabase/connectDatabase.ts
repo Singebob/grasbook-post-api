@@ -13,8 +13,7 @@ const connection = createConnection({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   logging: true,
-  entities: [Comment, Post],
-  synchronize: true,
+  entities: [Comment, Post]
 });
 
 export { connection };

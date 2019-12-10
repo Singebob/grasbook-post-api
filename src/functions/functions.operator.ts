@@ -30,7 +30,7 @@ const UploadBinaryToUri = async values => {
     Bucket: `${bucketName}`,
     Key: `postApi/${values.userUuid}.${Date.now()}.${values.mediaType}`,
     Body: mediaBlob,
-    ACL: 'read-public',
+    ACL: 'public-read',
   };
   if (!lodash.isNull(values.mediaBlob) && !lodash.isUndefined(values.mediaBlob)) {
     const stringLocation = endpoint.substring(indexOfEnd(endpoint, 'https://'));
@@ -41,7 +41,7 @@ const UploadBinaryToUri = async values => {
     });
     return `https://${bucketName}.${stringLocation}${params.Key}`;
   }
-  return values.pictureUrl;
+  return values.mediaUrl;
 };
 
 export { UploadBinaryToUri };
