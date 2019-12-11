@@ -1,6 +1,6 @@
 <h1 align="center">Welcome to post-api 👋</h1>
 <p>
-  <a href="https://www.npmjs.com/package/post-api" target="_blank">
+  <a target="_blank">
     <img alt="Version" src="https://img.shields.io/npm/v/post-api.svg">
   </a>
   <a href="http://api.posts.eddycheval.codes/documentation" target="_blank">
