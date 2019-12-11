@@ -19,7 +19,7 @@ const UploadBinaryToUri = async values => {
     region,
     endpoint,
   });
-
+  if (!lodash.isNull(values.mediaBlob) && !lodash.isUndefined(values.mediaBlob)) {
   // eslint-disable-next-line new-cap
   const mediaBlob: Buffer = Buffer.from(
     values.mediaBlob.replace(/^data:image\/\w+;base64,/, ''),
@@ -32,7 +32,7 @@ const UploadBinaryToUri = async values => {
     Body: mediaBlob,
     ACL: 'public-read',
   };
-  if (!lodash.isNull(values.mediaBlob) && !lodash.isUndefined(values.mediaBlob)) {
+  
     const stringLocation = endpoint.substring(indexOfEnd(endpoint, 'https://'));
     client.upload(params, (err: any) => {
       if (err) {
