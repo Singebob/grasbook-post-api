@@ -85,6 +85,7 @@ Others participants
 * Github: [@SimonHuet](https://github.com/SimonHuet)
 * Github: [@EddyCheval](https://github.com/EddyCheval)
 * Github: [@YannDurand](https://github.com/Nefaden)
+* Github: [@AlexandreRabreau](https://github.com/AlexandreRab)
 
 ## 🤝 Contributing
 
