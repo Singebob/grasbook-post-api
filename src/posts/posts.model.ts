@@ -32,7 +32,7 @@ export class Post extends BaseEntity {
 
   @OneToMany(
     type => Comment,
-    comment => comment.post,
+    comment => comment.postUuid,
     {
       cascade: false,
     }

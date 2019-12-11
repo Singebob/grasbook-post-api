@@ -25,6 +25,9 @@ export class Comment extends BaseEntity {
   @Column('uuid')
   public userUuid: string;
 
+  @Column('uuid')
+  public postUuid: string;
+
   @CreateDateColumn() // need DEFAUT DATE.now() in database
   public createdAt: Date;
 
