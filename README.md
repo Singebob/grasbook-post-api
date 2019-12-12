@@ -27,8 +27,6 @@
 
 ### 🏠 [Homepage](https://github.com/Singebob/grasbook-post-api#readme)
 
-### ✨ [Demo](http://api.posts.eddycheval.codes/documentation)
-
 ## Install
 
 ```sh
@@ -68,13 +66,17 @@ Informations for environnement variable:
 | KEYCLOAK_CLIENT_ID     | The client id for keycloak              | STRING   |
 | KEYCLOAK_CLIENT_SECRET | The client's secret                     | STRING   |
 
-
 ## Run tests
 
 ```sh
 npm run test
 ```
+## Docs
+When your api is start, you can check:
 
+```sh
+http://<yourHost>:<yourPort>/documentation
+```
 ## Author
 
 👤 **Jeremy Chauvin**
