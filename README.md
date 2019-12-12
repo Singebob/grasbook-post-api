@@ -21,8 +21,8 @@
 - Recreating a facebook-like app. Seperated in micro-services with a service for each part :
   - Posts API ((here))
   - Messaging API (https://gitlab.com/projet-gras-book/message-api)
-  - User API (https://gitlab.com/projet-gras-book/user-api)
-  - Reaction API (https://gitlab.com/projet-gras-book/api-reaction)
+  - User API (https://github.com/EddyCheval/gras-book-user-api)
+  - Reaction API (https://github.com/Nefaden/grasbook-reaction-api)
   - Gras-Book UI (https://github.com/SimonHuet/gras-book-front)
 
 ### 🏠 [Homepage](https://github.com/Singebob/grasbook-post-api#readme)
